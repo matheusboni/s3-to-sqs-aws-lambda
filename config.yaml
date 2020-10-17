@@ -1,0 +1,17 @@
+region: sa-east-1
+
+function_name: sqs-to-dynamodb-aws-lambda
+handler: main.handler
+description: AWS Lambda that receive events from sqs, process and send the content to dynamodb.
+runtime: python3.6
+role: lambda-role
+
+#aws_access_key_id:
+#aws_secret_access_key:
+
+environment_variables:
+    TABLE: payment
+    REGION: sa-east-1
+
+build:
+  source_directories: lib,model,repository
