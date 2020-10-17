@@ -11,7 +11,7 @@ def handler(event, _):
         for record in event['Records']:
             payment = json.loads(record['body'])
 
-            if payment.get('status') == 'PROCESSED' and payment.get('purchase_id') is not None:
+            if payment.get('status') == 'PROCESSED' and payment.get('purchaseId') is not None:
                 payment['date'] = datetime.now().isoformat()[:-3]
                 payment_repository.save(payment)
                 print("Payment: {} was saved".format(payment))
