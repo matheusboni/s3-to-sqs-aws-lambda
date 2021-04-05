@@ -1,6 +1,7 @@
 import json
 from datetime import datetime
 
+from logger_utils import logger
 from repository.payment_repository import PaymentRepository
 
 payment_repository = PaymentRepository()
@@ -14,12 +15,12 @@ def handler(event, _):
             if payment.get('status') == 'PROCESSED' and payment.get('purchaseId') is not None:
                 payment['date'] = datetime.now().isoformat()[:-3]
                 payment_repository.save(payment)
-                print("Payment: {} was saved".format(payment))
+                logger.info("Payment: {} was saved".format(payment))
             else:
-                print("Payment: {} was not processed successfully".format(payment))
+                logger.warn("Payment: {} was not processed successfully".format(payment))
 
     except Exception as e:
-        print('Exception occurred: {}'.format(e))
+        logger.exception('Exception occurred: ', e)
         raise e
 
     response = dict(
